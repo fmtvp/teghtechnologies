@@ -90,6 +90,15 @@ app.get('/email-client', (req, res) => {
   res.sendFile(__dirname + '/public/email-client.html');
 });
 
+app.get('/jerry.gif', (req, res) => {
+  res.sendFile(__dirname + '/public/jerry.gif');
+});
+
+
+app.get('/product.png', (req, res) => {
+  res.sendFile(__dirname + '/public/product.png');
+});
+
 // Get all OTPs for email client
 app.get('/api/otps', async (req, res) => {
   try {

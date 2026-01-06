@@ -165,7 +165,6 @@ app.post('/api/verify-otp', async (req, res) => {
   res.json({ success: true });
 });
 
-// Complete registration
 app.post('/api/register', async (req, res) => {
   try {
     const {
@@ -201,6 +200,7 @@ app.post('/api/register', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 // Login
 app.post('/api/login', async (req, res) => {
   try {

@@ -441,13 +441,39 @@ app.get('/api/users/:id', adminOnly, async (req, res) => {
 
 // Swagger UI (Admin only)
 app.get('/internal/swagger/index.html', (req, res) => {
-  const html = swaggerUi.generateHTML(specs, {
-    customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: 'TeghIndustries Admin API',
-    swaggerOptions: {
-      url: '/api/swagger.json'
-    }
-  });
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TechIndustries Admin API</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui.css" />
+  <style>
+    .swagger-ui .topbar { display: none }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-bundle.js"></script>
+  <script src="https://unpkg.com/swagger-ui-dist@5.0.0/swagger-ui-standalone-preset.js"></script>
+  <script>
+    window.onload = function() {
+      SwaggerUIBundle({
+        url: '/api/swagger.json',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        plugins: [
+          SwaggerUIBundle.plugins.DownloadUrl
+        ],
+        layout: "StandaloneLayout"
+      });
+    };
+  </script>
+</body>
+</html>`;
   res.send(html);
 });
 

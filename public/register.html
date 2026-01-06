@@ -20,7 +20,7 @@
         .logo { font-size: 28px; font-weight: 700; color: #007bff; margin-right: 50px; }
         .nav-menu { display: flex; list-style: none; margin-right: auto; }
         .nav-menu > li { position: relative; margin-right: 40px; }
-        .nav-menu > li > a { color: #333; text-decoration: none; font-weight: 500; font-size: 15px; padding: 25px 0; display: block; }
+        .nav-menu > li > a { color: #333; text-decoration: none; font-weight: 500; font-size: 15px; padding: 21px 0; display: block; }
         .nav-menu > li > a:hover { color: #007bff; }
         .nav-actions { display: flex; gap: 15px; align-items: center; }
         .btn-outline { border: 1px solid #007bff; color: #007bff; padding: 8px 20px; text-decoration: none; border-radius: 3px; font-size: 14px; font-weight: 500; }
@@ -141,7 +141,157 @@
       color: black;
     }
   }
+/* =========================
+   RESPONSIVE STYLES
+   ========================= */
 
+/* Tablets & small laptops */
+@media (max-width: 1024px) {
+  .nav-container {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 10px;
+  }
+
+  .nav-menu {
+    margin: 15px 0 0;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-menu > li {
+    margin-right: 0;
+  }
+
+  .main {
+    padding: 10px 10px;
+  }
+}
+
+/* Tablets & large phones */
+@media (max-width: 768px) {
+  /* Header */
+  .header-top .container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    margin-right: 0;
+    font-size: 24px;
+  }
+
+  .nav-menu {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  /* Register card */
+  .register-card {
+    padding: 30px 25px;
+  }
+
+  .register-header h1 {
+    font-size: 26px;
+  }
+
+  /* Steps */
+  .step-indicator {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .step-line {
+    display: none;
+  }
+
+  /* Forms */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-input {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  .btn-step {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+  }
+
+  .register-card {
+    padding: 22px 18px;
+    border-radius: 6px;
+  }
+
+  .register-header h1 {
+    font-size: 22px;
+  }
+
+  .register-header p {
+    font-size: 14px;
+  }
+
+  .step-number {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+
+  .step-text {
+    font-size: 13px;
+  }
+
+  /* Footer animation */
+  .jerry-footer {
+    height: 70px;
+  }
+
+  .jerry-push img {
+    width: 50px;
+  }
+
+  .jerry-text {
+    font-size: 14px;
+  }
+}
+
+/* Ultra small screens (old phones) */
+@media (max-width: 360px) {
+  .btn-outline,
+  .btn-primary {
+    padding: 7px 10px;
+    font-size: 13px;
+  }
+
+  .form-label {
+    font-size: 13px;
+  }
+}
     </style>
 </head>
 <body>

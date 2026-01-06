@@ -443,7 +443,10 @@ app.get('/api/users/:id', adminOnly, async (req, res) => {
 app.get('/internal/swagger/index.html', (req, res) => {
   const html = swaggerUi.generateHTML(specs, {
     customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: 'TechIndustries Admin API'
+    customSiteTitle: 'TeghIndustries Admin API',
+    swaggerOptions: {
+      url: '/api/swagger.json'
+    }
   });
   res.send(html);
 });
@@ -453,9 +456,6 @@ app.get('/api/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(specs);
 });
-
-// Serve swagger UI assets
-app.use('/internal/swagger', swaggerUi.serve);
 
 // Logout
 app.post('/api/logout', (req, res) => {

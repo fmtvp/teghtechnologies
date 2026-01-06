@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Client - OTP Viewer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; min-height: 100vh; display: flex; flex-direction: column; }
+        .header { background: #d93025; color: white; padding: 1rem 0; }
+        .nav { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: white; text-decoration: none; }
+        .container { max-width: 1000px; margin: 2rem auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); flex: 1; }
+        .inbox-header { background: #f8f9fa; padding: 1rem 2rem; border-bottom: 1px solid #ddd; border-radius: 10px 10px 0 0; }
+        .inbox-header h2 { color: #333; }
+        .email-list { padding: 0; }
+        .email-item { padding: 1rem 2rem; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .email-item:hover { background: #f8f9fa; }
+        .email-info { flex: 1; }
+        .email-subject { font-weight: bold; color: #333; margin-bottom: 0.5rem; }
+        .email-from { color: #666; font-size: 0.9rem; }
+        .otp-code { background: #e8f5e8; color: #2e7d32; padding: 0.5rem 1rem; border-radius: 5px; font-weight: bold; font-size: 1.2rem; }
+        .email-time { color: #999; font-size: 0.8rem; margin-left: 1rem; }
+        .no-emails { text-align: center; padding: 3rem; color: #666; }
+        .refresh-btn { background: #d93025; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+        .refresh-btn:hover { background: #b71c1c; }
+        .expired { opacity: 0.5; }
+        .expired .otp-code { background: #ffebee; color: #c62828; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">📧 Email Client</div>
+            <div class="nav-links">
+                <button class="refresh-btn" onclick="loadEmails()">Refresh</button>
+                <a href="/">Back to Site</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="inbox-header">
+            <h2>📥 Inbox - OTP Messages</h2>
+            <p>All verification codes sent to users (Auto-refresh every 5 seconds)</p>
+        </div>
+        
+        <div id="email-list" class="email-list">
+            <div class="no-emails">Loading emails...</div>
+        </div>
+    </div>
+
+    <footer style="background: #333; color: white; padding: 20px; text-align: center; margin-top: 40px;">
+        <p>&copy; 2026 TeghIndustries. All rights reserved.</p>
+        <p style="margin-top: 8px; font-size: 16px; opacity: 0; animation: thanosSnap 3s ease-in-out 2s forwards;">
+            Crafted with ❤️ by <a href="https://linktr.ee/gurudattchoudhary" target="_blank" style="color: #ccc; text-decoration: none;">Gurudatt Choudhary</a>
+        </p>
+    </footer>
+
+    <style>
+        @keyframes thanosSnap {
+            0% { opacity: 0; transform: scale(0.8) rotate(-5deg); filter: blur(2px); }
+            20% { opacity: 0.3; transform: scale(0.9) rotate(-2deg); filter: blur(1px); }
+            50% { opacity: 0.7; transform: scale(1.1) rotate(1deg); filter: blur(0.5px); }
+            80% { opacity: 0.9; transform: scale(1.05) rotate(0deg); filter: blur(0px); }
+            100% { opacity: 0.9; transform: scale(1) rotate(0deg); filter: blur(0px); }
+        }
+    </style>
+
+    <script>
+        async function loadEmails() {
+            try {
+                const response = await fetch('/api/otps');
+                const otps = await response.json();
+                
+                const emailList = document.getElementById('email-list');
+                
+                if (otps.length === 0) {
+                    emailList.innerHTML = '<div class="no-emails">No OTP messages found</div>';
+                    return;
+                }
+                
+                const now = new Date();
+                emailList.innerHTML = otps.map(otp => {
+                    const createdAt = new Date(otp.createdAt);
+                    const timeAgo = Math.floor((now - createdAt) / 1000);
+                    const isExpired = timeAgo > 30;
+                    
+                    return `
+                        <div class="email-item ${isExpired ? 'expired' : ''}">
+                            <div class="email-info">
+                                <div class="email-subject">
+                                    ${isExpired ? '🔒' : '🔓'} Verification Code for ${otp.email}
+                                </div>
+                                <div class="email-from">
+                                    From: noreply@teghindustries.com
+                                </div>
+                            </div>
+                            <div class="otp-code">${otp.otp}</div>
+                            <div class="email-time">
+                                ${timeAgo < 60 ? timeAgo + 's ago' : Math.floor(timeAgo/60) + 'm ago'}
+                                ${isExpired ? '(Expired)' : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                document.getElementById('email-list').innerHTML = 
+                    '<div class="no-emails">Error loading emails</div>';
+            }
+        }
+
+        // Load emails on page load
+        loadEmails();
+        
+        // Auto-refresh every 5 seconds
+        setInterval(loadEmails, 5000);
+    </script>
+</body>
+</html>

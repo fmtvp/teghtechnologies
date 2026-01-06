@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - TeghIndustries</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Header */
+        .header { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header-top { background: #f8f9fa; padding: 8px 0; font-size: 13px; }
+        .header-top .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; }
+        .header-top a { color: #666; text-decoration: none; margin-right: 20px; }
+        .header-top a:hover { color: #007bff; }
+        
+        .nav-main { padding: 0; }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; height: 70px; }
+        .logo { font-size: 28px; font-weight: 700; color: #007bff; margin-right: 50px; }
+        .nav-menu { display: flex; list-style: none; margin-right: auto; }
+        .nav-menu > li { position: relative; margin-right: 40px; }
+        .nav-menu > li > a { color: #333; text-decoration: none; font-weight: 500; font-size: 15px; padding: 25px 0; display: block; }
+        .nav-menu > li > a:hover { color: #007bff; }
+        .nav-actions { display: flex; gap: 15px; align-items: center; }
+        .btn-outline { border: 1px solid #007bff; color: #007bff; padding: 8px 20px; text-decoration: none; border-radius: 3px; font-size: 14px; font-weight: 500; }
+        .btn-primary { background: #007bff; color: white; padding: 8px 20px; text-decoration: none; border-radius: 3px; font-size: 14px; font-weight: 500; }
+        
+        /* Main Content */
+        .main { max-width: 1400px; margin: 0 auto; padding: 60px 20px; flex: 1; }
+        .register-container { max-width: 550px; margin: 0 auto; }
+        
+        /* Breadcrumb */
+        .breadcrumb { margin-bottom: 30px; text-align: center; }
+        .breadcrumb a { color: #007bff; text-decoration: none; font-size: 14px; }
+        .breadcrumb span { color: #666; margin: 0 8px; }
+        
+        /* Register Card */
+        .register-card { background: white; padding: 50px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .register-header { text-align: center; margin-bottom: 40px; }
+        .register-header h1 { font-size: 32px; font-weight: 300; color: #333; margin-bottom: 10px; }
+        .register-header p { color: #666; font-size: 16px; }
+        
+        /* Step Indicator */
+        .step-indicator { display: flex; justify-content: center; margin-bottom: 40px; }
+        .step-item { display: flex; align-items: center; }
+        .step-number { width: 40px; height: 40px; border-radius: 50%; background: #e9ecef; color: #666; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-right: 15px; }
+        .step-number.active { background: #007bff; color: white; }
+        .step-number.completed { background: #28a745; color: white; }
+        .step-line { width: 60px; height: 2px; background: #e9ecef; margin: 0 15px; }
+        .step-line.completed { background: #28a745; }
+        .step-text { font-size: 14px; color: #666; font-weight: 500; }
+        .step-text.active { color: #007bff; }
+        
+        /* Form Steps */
+        .step { display: none; }
+        .step.active { display: block; }
+        
+        .form-group { margin-bottom: 25px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-label { display: block; font-weight: 600; color: #333; margin-bottom: 8px; font-size: 14px; }
+        .form-input { width: 100%; padding: 15px; border: 2px solid #e9ecef; border-radius: 4px; font-size: 16px; transition: all 0.3s; }
+        .form-input:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        
+        .btn-step { width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-step:hover { background: #0056b3; transform: translateY(-1px); }
+        .btn-step:disabled { background: #6c757d; cursor: not-allowed; transform: none; }
+        
+        .otp-section { background: #f8f9fa; padding: 20px; border-radius: 4px; margin-top: 20px; display: none; }
+        .otp-info { color: #666; font-size: 14px; margin-bottom: 15px; text-align: center; }
+        .otp-help { color: #007bff; font-size: 13px; text-align: center; margin-top: 10px; }
+        
+        .login-link { background: #f8f9fa; padding: 20px; border-radius: 4px; text-align: center; margin-top: 30px; }
+        .login-link p { color: #666; margin-bottom: 10px; }
+        .btn-login-link { color: #007bff; text-decoration: none; font-weight: 600; }
+        .btn-login-link:hover { text-decoration: underline; }
+        
+        .error { color: #dc3545; font-size: 14px; margin-top: 8px; }
+        .success { color: #28a745; font-size: 14px; margin-top: 8px; }
+       
+  .jerry-footer {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .jerry-push {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    transform: translateX(-100%);
+    animation: footer-push 22s linear infinite;
+  }
+
+  .jerry-push img {
+    width: 70px;
+    margin-right: 12px;
+  }
+
+  .jerry-text {
+    font-size: 18px;
+    font-weight: 400;
+    white-space: nowrap;
+    color: #444;
+  }
+
+  /* Perfect center pause */
+  @keyframes footer-push {
+    /* Start off-screen left */
+    0% {
+      transform: translateX(-120%);
+    }
+
+    /* Arrive EXACT center */
+    40% {
+      transform: translateX(50vw) translateX(-50%);
+    }
+
+    /* Pause at center */
+    55% {
+      transform: translateX(50vw) translateX(-50%);
+    }
+
+    /* Exit off-screen right */
+    100% {
+      transform: translateX(100vw);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .jerry-text { color: #ddd; }
+  }
+
+  /* Optional: dark mode friendly */
+  @media (prefers-color-scheme: dark) {
+    .jerry-text {
+      color: black;
+    }
+  }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div>
+                    <a href="#">Support</a>
+                    <a href="#">Contact Sales</a>
+                    <a href="#">Find a Partner</a>
+                </div>
+                <div>
+                    <a href="/email-client">📧 Email Portal</a>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-main">
+            <div class="nav-container">
+                <div class="logo">TeghIndustries</div>
+                <ul class="nav-menu">
+                    <li><a href="/">Products</a></li>
+                    <li><a href="/">Solutions</a></li>
+                    <li><a href="/">Services</a></li>
+                    <li><a href="/">Support</a></li>
+                    <li><a href="/">Partners</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="/login" class="btn-outline">Sign In</a>
+                    <a href="/register" class="btn-primary">Get Started</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="register-container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <span>Create Account</span>
+            </div>
+
+            <div class="register-card">
+                <div class="register-header">
+                    <h1>Create Account</h1>
+                    <p>Join TeghIndustries and access enterprise solutions</p>
+                </div>
+
+                <div class="step-indicator">
+                    <div class="step-item">
+                        <div class="step-number active" id="step1-indicator">1</div>
+                        <div class="step-text active">Email Verification</div>
+                    </div>
+                    <div class="step-line" id="line1"></div>
+                    <div class="step-item">
+                        <div class="step-number" id="step2-indicator">2</div>
+                        <div class="step-text">Personal Info</div>
+                    </div>
+                    <div class="step-line" id="line2"></div>
+                    <div class="step-item">
+                        <div class="step-number" id="step3-indicator">3</div>
+                        <div class="step-text">Complete Setup</div>
+                    </div>
+                </div>
+
+                <!-- Step 1: Email & OTP -->
+                <div id="step1" class="step active">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" required placeholder="Enter your business email">
+                    </div>
+                    <button class="btn-step" onclick="sendOTP()">Send Verification Code</button>
+                    
+                    <div id="otp-section" class="otp-section">
+                        <div class="otp-info">We've sent a 6-digit verification code to your email</div>
+                        <div class="form-group">
+                            <label class="form-label" for="otp">Verification Code</label>
+                            <input type="text" id="otp" class="form-input" maxlength="6" placeholder="Enter 6-digit code">
+                        </div>
+                        <button class="btn-step" onclick="verifyOTP()">Verify Code</button>
+                        <div class="otp-help">Check your email or visit <a href="/email-client" target="_blank">Email Portal</a> for testing</div>
+                    </div>
+                    <div id="step1-message"></div>
+                </div>
+
+                <!-- Step 2: Personal Information -->
+                <div id="step2" class="step">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-input" required placeholder="First name">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-input" required placeholder="Last name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-input" required placeholder="Business phone number">
+                    </div>
+                    <button class="btn-step" onclick="nextStep(3)">Continue</button>
+                </div>
+
+                <!-- Step 3: Address & Password -->
+                <div id="step3" class="step">
+                    <div class="form-group">
+                        <label class="form-label" for="address">Business Address</label>
+                        <input type="text" id="address" class="form-input" required placeholder="Street address">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="city">City</label>
+                            <input type="text" id="city" class="form-input" required placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="zipCode">ZIP Code</label>
+                            <input type="text" id="zipCode" class="form-input" required placeholder="ZIP code">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" class="form-input" required placeholder="Create a strong password">
+                    </div>
+                    <button class="btn-step" onclick="completeRegistration()">Create Account</button>
+                    <div id="step3-message"></div>
+                </div>
+
+                <div class="login-link">
+                    <p>Already have an account?</p>
+                    <a href="/login" class="btn-login-link">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="jerry-footer">
+        <div class="jerry-push">
+          <img src="jerry.gif" alt="Jerry pushing">
+          <div class="jerry-text">
+            Crafted with ❤️ by Gurudatt Choudhary
+          </div>
+        </div>
+      </div>
+      
+
+    <script>
+        let currentStep = 1;
+
+        function nextStep(step) {
+            // Update previous step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.add('completed');
+            if (currentStep < 3) {
+                document.getElementById(`line${currentStep}`).classList.add('completed');
+            }
+            
+            // Update current step
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+        }
+
+        async function sendOTP() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                document.getElementById('step1-message').innerHTML = '<div class="error">Please enter your email address</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('otp-section').style.display = 'block';
+                    document.getElementById('step1-message').innerHTML = '<div class="success">Verification code sent successfully!</div>';
+                } else {
+                    document.getElementById('step1-message').innerHTML = '<div class="error">' + data.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('step1-message').innerHTML = '<div class="error">Failed to send verification code</div>';
+            }
+        }
+
+        async function verifyOTP() {
+            const email = document.getElementById('email').value;
+            const otp = document.getElementById('otp').value;
+
+            if (!otp) {
+                document.getElementById('step1-message').innerHTML = '<div class="error">Please enter the verification code</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/verify-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, otp })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    nextStep(2);
+                } else {
+                    document.getElementById('step1-message').innerHTML = '<div class="error">' + data.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('step1-message').innerHTML = '<div class="error">Verification failed</div>';
+            }
+        }
+
+        async function completeRegistration() {
+            const formData = {
+                email: document.getElementById('email').value,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                city: document.getElementById('city').value,
+                zipCode: document.getElementById('zipCode').value,
+                password: document.getElementById('password').value
+            };
+
+            // Validate required fields
+            if (!formData.firstName || !formData.lastName || !formData.phone || !formData.address || !formData.city || !formData.zipCode || !formData.password) {
+                document.getElementById('step3-message').innerHTML = '<div class="error">Please fill in all required fields</div>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    document.getElementById('step3-message').innerHTML = '<div class="error">' + data.error + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('step3-message').innerHTML = '<div class="error">Registration failed. Please try again.</div>';
+            }
+        }
+    </script>
+</body>
+</html>

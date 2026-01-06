@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - TeghIndustries</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Header */
+        .header { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header-top { background: #f8f9fa; padding: 8px 0; font-size: 13px; }
+        .header-top .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; }
+        .header-top a { color: #666; text-decoration: none; margin-right: 20px; }
+        .header-top a:hover { color: #007bff; }
+        
+        .nav-main { padding: 0; }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; height: 70px; }
+        .logo { font-size: 28px; font-weight: 700; color: #007bff; margin-right: 50px; }
+        .nav-menu { display: flex; list-style: none; margin-right: auto; }
+        .nav-menu > li { position: relative; margin-right: 40px; }
+        .nav-menu > li > a { color: #333; text-decoration: none; font-weight: 500; font-size: 15px; padding: 25px 0; display: block; }
+        .nav-menu > li > a:hover { color: #007bff; }
+        .nav-actions { display: flex; gap: 15px; align-items: center; }
+        .btn-outline { border: 1px solid #007bff; color: #007bff; padding: 8px 20px; text-decoration: none; border-radius: 3px; font-size: 14px; font-weight: 500; }
+        .btn-primary { background: #007bff; color: white; padding: 8px 20px; text-decoration: none; border-radius: 3px; font-size: 14px; font-weight: 500; }
+        
+        /* Main Content */
+        .main { max-width: 1400px; margin: 0 auto; padding: 40px 20px; flex: 1; }
+        .login-container { max-width: 450px; margin: 0 auto; }
+        
+        /* Breadcrumb */
+        .breadcrumb { margin-bottom: 20px; text-align: center; }
+        .breadcrumb a { color: #007bff; text-decoration: none; font-size: 14px; }
+        .breadcrumb span { color: #666; margin: 0 8px; }
+        
+        /* Login Card */
+        .login-card { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .login-header { text-align: center; margin-bottom: 30px; }
+        .login-header h1 { font-size: 32px; font-weight: 300; color: #333; margin-bottom: 10px; }
+        .login-header p { color: #666; font-size: 16px; }
+        
+        /* Form */
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; font-weight: 600; color: #333; margin-bottom: 8px; font-size: 14px; }
+        .form-input { width: 100%; padding: 15px; border: 2px solid #e9ecef; border-radius: 4px; font-size: 16px; transition: all 0.3s; }
+        .form-input:focus { outline: none; border-color: #007bff; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        
+        .btn-login { width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-login:hover { background: #0056b3; transform: translateY(-1px); }
+        
+        .form-footer { text-align: center; margin-top: 20px; }
+        .form-footer a { color: #007bff; text-decoration: none; font-weight: 500; }
+        .form-footer a:hover { text-decoration: underline; }
+        
+        .divider { text-align: center; margin: 20px 0; color: #666; position: relative; }
+        .divider::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: #e9ecef; }
+        .divider span { background: white; padding: 0 20px; }
+        
+        .register-link { background: #f8f9fa; padding: 15px; border-radius: 4px; text-align: center; margin-top: 20px; }
+        .register-link p { color: #666; margin-bottom: 10px; }
+        .btn-register { color: #007bff; text-decoration: none; font-weight: 600; }
+        .btn-register:hover { text-decoration: underline; }
+        
+        .error { color: #dc3545; font-size: 14px; margin-top: 8px; }
+        .success { color: #28a745; font-size: 14px; margin-top: 8px; }
+        
+        /* Footer */
+        .footer { background: #333; color: white; padding: 30px 0; margin-top: auto; }
+        .footer-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; text-align: center; }
+        .footer-content p { color: #ccc; margin-bottom: 10px; }
+        .developer-credit { font-size: 16px; opacity: 0.9; animation: heartbeat 2s ease-in-out infinite; }
+        .developer-credit a { color: #ccc; text-decoration: none; }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div>
+                    <a href="#">Support</a>
+                    <a href="#">Contact Sales</a>
+                    <a href="#">Find a Partner</a>
+                </div>
+                <div>
+                    <a href="/email-client">📧 Email Portal</a>
+                </div>
+            </div>
+        </div>
+        <nav class="nav-main">
+            <div class="nav-container">
+                <div class="logo">TeghIndustries</div>
+                <ul class="nav-menu">
+                    <li><a href="/">Products</a></li>
+                    <li><a href="/">Solutions</a></li>
+                    <li><a href="/">Services</a></li>
+                    <li><a href="/">Support</a></li>
+                    <li><a href="/">Partners</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="/login" class="btn-outline">Sign In</a>
+                    <a href="/register" class="btn-primary">Get Started</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="login-container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <span>Sign In</span>
+            </div>
+
+            <div class="login-card">
+                <div class="login-header">
+                    <h1>Sign In</h1>
+                    <p>Access your TeghIndustries account</p>
+                </div>
+
+                <form onsubmit="login(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" required placeholder="Enter your email address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" id="password" class="form-input" required placeholder="Enter your password">
+                    </div>
+                    
+                    <button type="submit" class="btn-login">Sign In</button>
+                    <div id="message"></div>
+                </form>
+
+                <div class="form-footer">
+                    <a href="#">Forgot your password?</a>
+                </div>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="register-link">
+                    <p>Don't have an account?</p>
+                    <a href="/register" class="btn-register">Create Account</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 TeghIndustries Inc. All rights reserved.</p>
+            <p class="developer-credit">
+                Crafted with ❤️ by <a href="https://www.linkedin.com/in/gurudatt-choudhary" target="_blank">Gurudatt Choudhary</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        async function login(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                } else {
+                    document.getElementById('message').innerHTML = '<div class="error">' + data.message + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('message').innerHTML = '<div class="error">Login failed. Please try again.</div>';
+            }
+        }
+    </script>
+</body>
+</html>

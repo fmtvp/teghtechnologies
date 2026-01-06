@@ -18,7 +18,19 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
-
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
 // MongoDB connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/admin-takeover-lab');
 
@@ -458,7 +470,7 @@ app.get('/internal/swagger/index.html', (req, res) => {
   <script>
     window.onload = function() {
       SwaggerUIBundle({
-        url: '/api/swagger.json',
+        url: window.location.origin + '/api/swagger.json',
         dom_id: '#swagger-ui',
         deepLinking: true,
         presets: [

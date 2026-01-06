@@ -1,0 +1,26 @@
+{
+  "name": "admin-takeover-lab",
+  "version": "1.0.0",
+  "description": "Lab environment for admin takeover vulnerability",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.22.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.5.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

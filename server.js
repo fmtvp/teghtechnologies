@@ -152,54 +152,55 @@ app.post('/api/send-otp', async (req, res) => {
 
 // Verify OTP
 app.post('/api/verify-otp', async (req, res) => {
-  try {
-    const { email, otp } = req.body;
-    const otpRecord = await OTP.findOne({ email, otp });
-    
-    if (otpRecord) {
-      req.session.verifiedEmail = email;
-      res.json({ success: true });
-    } else {
-      res.json({ success: false, message: 'Invalid OTP' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  const { email, otp } = req.body;
+
+  const otpRecord = await OTP.findOne({ email, otp });
+  if (!otpRecord) {
+    return res.json({ success: false });
   }
+
+  // OTP verified for THIS email
+  req.session.verifiedEmail = email;
+
+  res.json({ success: true });
 });
 
 // Complete registration
 app.post('/api/register', async (req, res) => {
   try {
-    const { email, password, firstName, lastName, phone, address, city, zipCode } = req.body;
-    
-    if (req.session.verifiedEmail !== email) {
+    const {
+      email,        // ❌ trusted from client
+      password,
+      firstName,
+      lastName
+    } = req.body;
+
+    // ❌ Only checks that SOME email was verified
+    if (!req.session.verifiedEmail) {
       return res.status(400).json({ error: 'Email not verified' });
     }
-    
+
+    // ❌ Does NOT ensure same email is used
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    // ✅ Server-side admin logic (but exploitable)
     const isAdmin = email.endsWith('@teghindustries.com');
-    
+
     const user = new User({
       email,
       password: hashedPassword,
       firstName,
       lastName,
-      phone,
-      address,
-      city,
-      zipCode,
       isAdmin
     });
-    
+
     await user.save();
-    req.session.user = { id: user._id, email: user.email, isAdmin: user.isAdmin };
-    
+
     res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
-
 // Login
 app.post('/api/login', async (req, res) => {
   try {

@@ -99,6 +99,11 @@ app.get('/dashboard', (req, res) => {
 });
 
 app.get('/email-client', (req, res) => {
+  const auth = req.headers.authorization;
+  if (!auth || auth !== 'Basic ' + Buffer.from('admin:password123').toString('base64')) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="Email Client"');
+    return res.status(401).send('Authentication required');
+  }
   res.sendFile(__dirname + '/public/email-client.html');
 });
 

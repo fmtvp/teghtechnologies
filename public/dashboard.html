@@ -5,100 +5,486 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Account - TeghIndustries</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f8f9fa; min-height: 100vh; display: flex; flex-direction: column; }
-        
-        /* Header */
-        .header { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
-        .header-top { background: #f8f9fa; padding: 8px 0; font-size: 13px; }
-        .header-top .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; }
-        .header-top a { color: #666; text-decoration: none; margin-right: 20px; }
-        .header-top a:hover { color: #007bff; }
-        
-        .nav-main { padding: 0; }
-        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; height: 70px; }
-        .logo { font-size: 28px; font-weight: 700; color: #007bff; margin-right: 50px; }
-        .nav-menu { display: flex; list-style: none; margin-right: auto; }
-        .nav-menu > li { position: relative; margin-right: 40px; }
-        .nav-menu > li > a { color: #333; text-decoration: none; font-weight: 500; font-size: 15px; padding: 25px 0; display: block; }
-        .nav-menu > li > a:hover { color: #007bff; }
-        .nav-user { display: flex; gap: 15px; align-items: center; }
-        .user-info { color: #666; font-size: 14px; }
-        .btn-logout { background: #dc3545; color: white; padding: 8px 16px; border: none; border-radius: 3px; font-size: 14px; font-weight: 500; cursor: pointer; }
-        .btn-logout:hover { background: #c82333; }
-        
-        /* Main Content */
-        .main { max-width: 1400px; margin: 0 auto; padding: 40px 20px; flex: 1; }
-        
-        /* Breadcrumb */
-        .breadcrumb { margin-bottom: 30px; }
-        .breadcrumb a { color: #007bff; text-decoration: none; font-size: 14px; }
-        .breadcrumb span { color: #666; margin: 0 8px; }
-        
-        /* Page Header */
-        .page-header { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 40px; }
-        .page-header h1 { font-size: 36px; font-weight: 300; color: #333; margin-bottom: 10px; }
-        .page-header p { font-size: 16px; color: #666; }
-        .user-badge { display: inline-block; background: #e3f2fd; color: #1976d2; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-left: 15px; }
-        
-        /* Admin Alert */
-        .admin-alert { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 1px solid #c3e6cb; padding: 30px; border-radius: 8px; margin-bottom: 40px; text-align: center; }
-        .admin-alert h3 { color: #155724; font-size: 20px; font-weight: 600; margin-bottom: 10px; }
-        .admin-alert p { color: #155724; font-size: 16px; }
-        
-        /* Quick Actions */
-        .quick-actions { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 40px; }
-        .quick-actions h2 { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 20px; }
-        .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-        .action-card { border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; text-align: center; transition: all 0.3s; }
-        .action-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: translateY(-2px); }
-        .action-icon { font-size: 32px; margin-bottom: 15px; }
-        .action-card h4 { font-size: 16px; font-weight: 600; color: #333; margin-bottom: 8px; }
-        .action-card p { color: #666; font-size: 14px; }
-        
-        /* Product Categories */
-        .categories { margin-bottom: 40px; }
-        .categories h2 { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 30px; }
-        .category-tabs { display: flex; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
-        .category-tab { flex: 1; padding: 20px; text-align: center; border-right: 1px solid #e9ecef; cursor: pointer; transition: all 0.3s; }
-        .category-tab:last-child { border-right: none; }
-        .category-tab:hover, .category-tab.active { background: #f8f9fa; }
-        .category-tab .icon { font-size: 24px; margin-bottom: 8px; }
-        .category-tab h4 { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 4px; }
-        .category-tab p { font-size: 12px; color: #666; }
-        
-        /* Products Grid */
-        .products-section { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 40px; }
-        .products-section h2 { font-size: 24px; font-weight: 600; color: #333; margin-bottom: 30px; }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
-        .product-card { border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden; transition: all 0.3s; }
-        .product-card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.1); transform: translateY(-3px); }
-        .product-image { height: 180px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; font-size: 48px; }
-        .product-info { padding: 25px; }
-        .product-badge { background: #007bff; color: white; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 3px; margin-bottom: 10px; display: inline-block; }
-        .product-info h3 { font-size: 18px; font-weight: 600; color: #333; margin-bottom: 8px; }
-        .product-info p { color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
-        .product-price { font-size: 16px; font-weight: 700; color: #007bff; margin-bottom: 15px; }
-        .product-btn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 3px; font-weight: 600; cursor: pointer; font-size: 14px; }
-        .product-btn:hover { background: #0056b3; }
-        
-        /* Special API Card */
-        .api-card { border-color: #28a745; background: linear-gradient(135deg, #f0fff4 0%, #ffffff 100%); }
-        .api-card .product-badge { background: #28a745; }
-        .api-card .product-btn { background: #28a745; }
-        .api-card .product-btn:hover { background: #218838; }
-        
-        /* Footer */
-        .footer { background: #333; color: white; padding: 40px 0; margin-top: auto; }
-        .footer-content { max-width: 1400px; margin: 0 auto; padding: 0 20px; text-align: center; }
-        .footer-content p { color: #ccc; margin-bottom: 10px; }
-        .developer-credit { font-size: 16px; opacity: 0.9; animation: heartbeat 2s ease-in-out infinite; }
-        .developer-credit a { color: #ccc; text-decoration: none; }
-        
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
+       /* =====================
+   GLOBAL
+===================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background: #f5f6f7;
+    color: #222;
+    line-height: 1.4;
+}
+
+a {
+    text-decoration: none;
+    color: #0672cb;
+}
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* =====================
+   HEADER TOP
+===================== */
+.header-top {
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+}
+
+.header-top .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 36px;
+}
+
+.header-top a {
+    color: #fff;
+    margin-right: 16px;
+    opacity: 0.85;
+}
+
+.header-top a:hover {
+    opacity: 1;
+}
+
+/* =====================
+   MAIN NAV
+===================== */
+.nav-main {
+    background: #fff;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: #0672cb;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+}
+
+.nav-menu a {
+    color: #333;
+    font-weight: 500;
+}
+
+.nav-menu a:hover {
+    color: #0672cb;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.user-info {
+    font-size: 14px;
+    color: #555;
+}
+
+.btn-logout {
+    background: #0672cb;
+    border: none;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-logout:hover {
+    background: #055fa8;
+}
+
+/* =====================
+   MAIN CONTENT
+===================== */
+.main {
+    max-width: 1400px;
+    margin: 30px auto 60px;
+    padding: 0 20px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.breadcrumb span {
+    margin: 0 6px;
+}
+
+/* Page Header */
+.page-header {
+    background: #fff;
+    padding: 30px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border: 1px solid #e2e2e2;
+}
+
+.page-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.page-header p {
+    margin-top: 8px;
+    color: #666;
+}
+
+.user-badge {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 6px 14px;
+    background: #e6f2fb;
+    color: #0672cb;
+    font-size: 13px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+/* =====================
+   ADMIN PANEL
+===================== */
+.admin-alert {
+    background: #fff3f3;
+    border: 1px solid #dc3545;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+}
+
+.admin-alert h3 {
+    color: #dc3545;
+    margin-bottom: 6px;
+}
+
+/* =====================
+   PRODUCT CARD
+===================== */
+.product-card {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    padding: 24px;
+    max-width: 420px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+.product-image {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.product-badge {
+    display: inline-block;
+    background: #f0f0f0;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.product-info h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.product-info p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 14px;
+}
+
+.product-price {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.product-btn {
+    background: #0672cb;
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.product-btn:hover {
+    background: #055fa8;
+}
+
+/* =====================
+   FOOTER
+===================== */
+.footer {
+    background: #111;
+    color: #ccc;
+    padding: 24px 20px;
+}
+
+.footer-content {
+    max-width: 1400px;
+    margin: auto;
+    text-align: center;
+    font-size: 13px;
+}
+
+.footer a {
+    color: #67b4ff;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 900px) {
+    .nav-menu {
+        display: none;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .product-card {
+        max-width: 100%;
+    }
+}
+:root {
+  --blue: #0672cb;
+  --light-blue: #e6f2fb;
+  --border: #d9d9d9;
+  --text: #222;
+  --muted: #666;
+  --bg: #f5f6f7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ===== HEADER ===== */
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar {
+  max-width: 1400px;
+  margin: auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  font-weight: 700;
+  color: var(--blue);
+  font-size: 20px;
+}
+
+.search {
+  flex: 1;
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.top-links {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: #fff;
+}
+
+.hero-inner {
+  max-width: 100vw;
+  margin: auto;
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 30px;
+  align-items: center;
+}
+
+.hero h1 {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.hero p {
+  margin-top: 8px;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.hero img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+/* ===== IDENTIFY SECTION ===== */
+.identify {
+  background: #fff;
+  margin: 20px auto;
+  max-width: 1400px;
+  padding: 40px 20px;
+  border-radius: 6px;
+}
+
+.identify-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 40px;
+}
+
+.identify h2 {
+  font-size: 26px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.identify p {
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.identify input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.identify button {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* right buttons */
+.action-btn {
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  padding: 12px;
+  border-radius: 4px;
+  background: #fff;
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* ===== CARDS ===== */
+.cards {
+  max-width: 1400px;
+  margin: 20px auto 60px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 24px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.card a {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  border-radius: 4px;
+  font-size: 14px;
+  text-decoration: none;
+}
+#head {
+  display: flex;
+  justify-content: space-around;
+  margin-top:20px
+}
+#head .chid{
+    text-align: center;
+    padding: 20px;
+    text-decoration: underline;
+    font-weight: bold;
+   
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .identify-grid {
+    grid-template-columns: 1fr;
+  }
+}
     </style>
 </head>
 <body>
@@ -119,11 +505,11 @@
             <div class="nav-container">
                 <div class="logo">TeghIndustries</div>
                 <ul class="nav-menu">
-                    <li><a href="/">Products</a></li>
-                    <li><a href="/">Solutions</a></li>
-                    <li><a href="/">Services</a></li>
-                    <li><a href="/">Support</a></li>
-                    <li><a href="/">Partners</a></li>
+                    <li><a href="#administrators">Products</a></li>
+                    <li><a href="#administrators">Solutions</a></li>
+                    <li><a href="#administrators">Services</a></li>
+                    <li><a href="#administrators">Support</a></li>
+                    <li><a href="#administrators">Partners</a></li>
                 </ul>
                 <div class="nav-user">
                     <span class="user-info" id="user-email"></span>
@@ -132,149 +518,92 @@
             </div>
         </nav>
     </header>
-
+    <div class="topbar">
+        <div class="logo">Tegh  Technologies</div>
+        <div class="search">
+          <input type="text" placeholder="Search Tegh  or identify your product" />
+        </div>
+        <div class="top-links">
+          <span>Contact Us</span>
+          <span>IN / EN</span>
+          <span>Cart</span>
+        </div>
+      </div>
     <main class="main">
         <div class="breadcrumb">
             <a href="/">Home</a>
             <span>/</span>
             <span>My Account</span>
         </div>
-
-        <div class="page-header">
-            <h1>My Account Dashboard</h1>
-            <p>Manage your technology solutions and explore enterprise offerings</p>
-            <span class="user-badge" id="user-badge">Customer</span>
-        </div>
-
-        <div id="admin-panel" style="display: none;">
-            <div class="admin-alert">
-                <h3>🔐 Administrator Access Granted</h3>
-                <p>You have elevated privileges and can access internal systems, APIs, and administrative functions</p>
+        
+        </header>
+           
+        <!-- HERO -->
+        <section class="hero">
+          <div class="hero-inner">
+            <div>
+                <h1>My Account Dashboard</h1>
+                <p>Manage your technology solutions and explore enterprise offerings</p>
+                <span class="user-badge" id="user-badge">Customer</span>
             </div>
-        </div>
-
-        <div class="quick-actions">
-            <h2>Quick Actions</h2>
-            <div class="actions-grid">
-                <div class="action-card">
-                    <div class="action-icon">📋</div>
-                    <h4>Order Status</h4>
-                    <p>Track your orders and shipments</p>
-                </div>
-                <div class="action-card">
-                    <div class="action-icon">💬</div>
-                    <h4>Support Center</h4>
-                    <p>Get help and technical support</p>
-                </div>
-                <div class="action-card">
-                    <div class="action-icon">📄</div>
-                    <h4>Documentation</h4>
-                    <p>Access product manuals and guides</p>
-                </div>
-                <div class="action-card">
-                    <div class="action-icon">⚙️</div>
-                    <h4>Account Settings</h4>
-                    <p>Manage your account preferences</p>
-                </div>
-                <div class="action-card">
-                    <div class="action-icon">💳</div>
-                    <h4>Billing & Invoices</h4>
-                    <p>View billing history and invoices</p>
-                </div>
-                <div class="action-card">
-                    <div class="action-icon">⬇️</div>
-                    <h4>Downloads</h4>
-                    <p>Software, drivers, and updates</p>
-                </div>
+            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8" alt="Laptop">
+          </div>
+        </section>
+        
+        <!-- IDENTIFY -->
+        <section class="identify">
+          <div class="identify-grid">
+            <div>
+              <h2>Identify a product or ask support</h2>
+              <p>Enter a product identifier, model, service request or describe what you are looking for.</p>
+              <input type="text">
+              <button>Search</button>
             </div>
-        </div>
-
-        <div class="categories">
-            <h2>Product Categories</h2>
-            <div class="category-tabs">
-                <div class="category-tab active">
-                    <div class="icon">💻</div>
-                    <h4>Computing</h4>
-                    <p>Laptops, Desktops, Workstations</p>
-                </div>
-                <div class="category-tab">
-                    <div class="icon">🖥️</div>
-                    <h4>Infrastructure</h4>
-                    <p>Servers, Storage, Networking</p>
-                </div>
-                <div class="category-tab">
-                    <div class="icon">☁️</div>
-                    <h4>Cloud Services</h4>
-                    <p>Hybrid Cloud, SaaS, PaaS</p>
-                </div>
-                <div class="category-tab">
-                    <div class="icon">🔒</div>
-                    <h4>Security</h4>
-                    <p>Endpoint, Network, Data Protection</p>
-                </div>
+        
+            <div>
+              <div class="action-btn">Identify or Search</div>
+              <div class="action-btn">Detect This PC</div>
+              <div class="action-btn">Recently Viewed</div>
+              <div class="action-btn">Browse All Products</div>
+              <div class="action-btn">My Products</div>
             </div>
+          </div>
+          <div id="head">
+          <div class="chid"><a href="/internal/swagger/index.html">Update drivers and automatically detect common hardware issues</a></div>
+          <div class="chid"><a href="/internal/swagger/index.html">Submit a new request, view open requests or find an expert for help</a></div>
+          <div class="chid"><a href="/internal/swagger/index.html">Installation upgrades and replace of Infrastruture</a></div>
+          <div class="chid"><a href="/internal/swagger/index.html">View warranty status and coverage options for your assets.</a></div>
         </div>
-
-        <div class="products-section">
-            <h2>Featured Products & Solutions</h2>
-            <div class="products-grid">
-                <div class="product-card">
-                    <div class="product-image">💻</div>
-                    <div class="product-info">
-                        <span class="product-badge">BESTSELLER</span>
-                        <h3>Precision Workstations</h3>
-                        <p>Professional workstations engineered for demanding applications, creative workflows, and high-performance computing tasks</p>
-                        <div class="product-price">Starting at $1,299</div>
-                        <button class="product-btn">Configure & Price</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">🖥️</div>
-                    <div class="product-info">
-                        <span class="product-badge">POPULAR</span>
-                        <h3>OptiPlex Desktops</h3>
-                        <p>Reliable business desktops built for productivity, everyday computing, and office environments</p>
-                        <div class="product-price">Starting at $649</div>
-                        <button class="product-btn">Shop Now</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">💼</div>
-                    <div class="product-info">
-                        <span class="product-badge">BUSINESS</span>
-                        <h3>Latitude Laptops</h3>
-                        <p>Business laptops designed for mobile professionals with enterprise security and management features</p>
-                        <div class="product-price">Starting at $899</div>
-                        <button class="product-btn">View Models</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">🖨️</div>
-                    <div class="product-info">
-                        <span class="product-badge">OFFICE</span>
-                        <h3>Laser Printers</h3>
-                        <p>High-performance printing solutions for offices, workgroups, and enterprise environments</p>
-                        <div class="product-price">Starting at $199</div>
-                        <button class="product-btn">Browse Printers</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image">☁️</div>
-                    <div class="product-info">
-                        <span class="product-badge">CLOUD</span>
-                        <h3>Cloud Solutions</h3>
-                        <p>Scalable infrastructure and managed cloud services for modern enterprises and digital transformation</p>
-                        <div class="product-price">Starting at $99/mo</div>
-                        <button class="product-btn">Learn More</button>
-                    </div>
-                </div>
-
-                <div class="product-card api-card">
-                    <div class="product-image">🔧</div>
+        </section>
+        
+        <!-- CARDS -->
+        <section class="cards">
+          <div class="card">
+            <h3>Drivers & Diagnostics</h3>
+            <p>Update drivers and automatically detect common hardware issues.</p>
+            <a href="#">Update Drivers</a>
+          </div>
+        
+          <div class="card">
+            <h3>Service Requests</h3>
+            <p>Submit a new request, view open requests or find an expert for help.</p>
+            <a href="#">Visit Service Requests</a>
+          </div>
+        
+          <div class="card">
+            <h3>Support Services</h3>
+            <p>View warranty status and coverage options for your assets.</p>
+            <a href="#">Manage Support Services</a>
+          </div>
+        
+          <div class="card">
+            <h3>Order Support</h3>
+            <p>Check your order status, view invoices or request a return.</p>
+            <a href="#">Find Order Status</a>
+          </div>
+        </section>
+         <div class="product-card api-card">
+                    <div id="administrators" class="product-image">🔧</div>
                     <div class="product-info">
                         <span class="product-badge">DEVELOPER</span>
                         <h3>API Developer Portal</h3>
@@ -282,8 +611,14 @@
                         <div class="product-price">Developer Access</div>
                         <a href="/internal/swagger/index.html" class="product-btn" style="display: block; text-decoration: none; color: white; text-align: center;">Access API Portal</a>
                     </div>
-                </div>
+                </div> 
             </div>
+        <div id="admin-panel" style="display: none;">
+            <div class="admin-alert" style="display: none;">
+                <h3>Admin Panel</h3>
+            </div>
+        </div> 
+               
         </div>
     </main>
 
@@ -298,26 +633,37 @@
 
     <script>
         async function loadUserInfo() {
-            try {
-                const response = await fetch('/api/user');
-                const user = await response.json();
-                
-                if (user.email) {
-                    document.getElementById('user-email').textContent = user.email;
-                    
-                    if (user.isAdmin) {
-                        document.getElementById('admin-panel').style.display = 'block';
-                        document.getElementById('user-badge').textContent = 'Administrator';
-                        document.getElementById('user-badge').style.background = '#dc3545';
-                        document.getElementById('user-badge').style.color = 'white';
-                    }
-                } else {
-                    window.location.href = '/login';
-                }
-            } catch (error) {
-                window.location.href = '/login';
-            }
+    try {
+        const response = await fetch('/api/user');
+        const user = await response.json();
+
+        if (!user.email) {
+            window.location.href = '/login';
+            return;
         }
+
+        // Show email
+        document.getElementById('user-email').textContent = user.email;
+
+        // Extract first name
+        if (user.name) {
+            const firstName = user.name.split(' ')[0];
+            document.getElementById('user-name').textContent = firstName;
+        }
+
+        // Admin handling
+        if (user.isAdmin) {
+            document.getElementById('admin-panel').style.display = 'block';
+            document.getElementById('user-badge').textContent = 'Administrator';
+            document.getElementById('user-badge').style.background = '#dc3545';
+            document.getElementById('user-badge').style.color = '#fff';
+        }
+
+    } catch (err) {
+        window.location.href = '/login';
+    }
+}
+
 
         async function logout() {
             try {

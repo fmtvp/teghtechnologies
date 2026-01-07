@@ -359,16 +359,6 @@ const adminOnly = (req, res, next) => {
 
 /**
  * @swagger
- * /api/otps:
- *   get:
- *     summary: Get all OTPs (for testing)
- *     responses:
- *       200:
- *         description: List of all OTPs
- */
-
-/**
- * @swagger
  * /otp/{email}:
  *   get:
  *     summary: Get OTP for specific email (testing endpoint)

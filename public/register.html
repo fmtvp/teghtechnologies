@@ -455,6 +455,10 @@
                 document.getElementById('step1-message').innerHTML = '<div class="error">Please enter your email address</div>';
                 return;
             }
+             if (email.endsWith('@teghindustries.com')) {
+                document.getElementById('step1-message').innerHTML = '<div class="error">Company email addresses are not allowed for registration</div>';
+                return;
+            }
 
             try {
                 const response = await fetch('/api/send-otp', {
